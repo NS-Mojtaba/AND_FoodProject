@@ -1,30 +1,38 @@
 package com.example.ciber.and_foodproject;
 
-import android.support.v4.widget.DrawerLayout;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
-    private FirebaseFirestore fireBase;
-    private Button saveBtn;
-    private EditText text;
+
+    private Button signIn_out;
+    private Button button_addItem;
+    private static MainActivity instance;
+    private boolean hasSignedIn;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        fireBase = FirebaseFirestore.getInstance();
+        instance = this;
+
+        button_addItem = findViewById(R.id.button_addItem);
+        button_addItem.setVisibility(View.GONE);
+        signIn_out = findViewById(R.id.button_signin_signout);
+        signIn_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            startActivity(new Intent(MainActivity.this, Login.class));
+            }
+        }) ;
+
+
+        /*fireBase = FirebaseFirestore.getInstance();
         saveBtn = findViewById(R.id.saveBtn);
         text =  findViewById(R.id.inputText);
 
@@ -45,6 +53,50 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+        */
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(hasSignedIn){
+            signIn_out.setOnClickListener(null);
+            signIn_out.setText("Sign-out");
+            signIn_out.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hasSignedIn = false;
+                    button_addItem.setVisibility(View.GONE);
+                    signIn_out.setText("Sign-in");
+                    signIn_out.setOnClickListener(new View.OnClickListener() {
+                                                      @Override
+                                                      public void onClick(View v) {
+                                                          startActivity(new Intent(MainActivity.this, Login.class));
+                                                      }
+                                                  });
+                    Toast.makeText(MainActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
+
+                }
+            }) ;
+            button_addItem.setVisibility(View.VISIBLE);
+        }
+        else {
+            signIn_out.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, Login.class));
+                }
+            }) ;
+            button_addItem.setVisibility(View.GONE);
+        }
+    }
+
+    public static MainActivity getInstance(){
+        return instance;
+    }
+
+    public void setSignIn(boolean option){
+        hasSignedIn = option;
     }
 }

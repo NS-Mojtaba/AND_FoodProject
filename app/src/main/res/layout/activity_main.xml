@@ -6,35 +6,93 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="158dp"
-        android:layout_marginEnd="150dp"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
-        android:id="@+id/inputText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_width="287dp"
+        android:layout_height="69dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="202dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
-        android:hint="Enter name..."
+        android:hint="Search..."
+        android:importantForAutofill="no"
         android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/saveBtn"
+        android:id="@+id/button_signin_signout"
+        android:layout_width="98dp"
+        android:layout_height="72dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/editText"
+        android:text="Sign-in" />
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="299dp"
+        android:layout_height="282dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="141dp">
+
+        <Button
+            android:id="@+id/category_chicken"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:text="Chicken" />
+
+        <Button
+            android:id="@+id/category_pork"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:text="Pork"
+            app:layout_column="1"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/category_Beef"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:text="Beef"
+            app:layout_column="2"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/category_fish"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:text="Fish"
+            app:layout_column="0"
+            app:layout_row="1" />
+
+        <Button
+            android:id="@+id/category_vegan"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:text="Vegan"
+            app:layout_column="1"
+            app:layout_row="1" />
+
+        <Button
+            android:id="@+id/category_desert"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:text="Desert"
+            app:layout_column="2"
+            app:layout_row="1" />
+    </android.support.v7.widget.GridLayout>
+
+    <Button
+        android:id="@+id/button_addItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="220dp"
-        android:text="Save to Firebase" />
+        android:layout_marginRight="36dp"
+        android:layout_marginBottom="41dp"
+        android:gravity="center_vertical|center"
+        android:text="+" />
 
 </RelativeLayout>
