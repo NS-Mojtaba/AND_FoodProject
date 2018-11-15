@@ -64,8 +64,9 @@ public class DetailOverview extends AppCompatActivity {
             deleteBtn.setVisibility(View.GONE);
         }
 
-
-
+        Intent i = getIntent();
+        //Dish dish = (Dish)i .getSerializableExtra("Dish");
+        int a = 1+1;
     }
 
     public void SetDish(Dish _dish){

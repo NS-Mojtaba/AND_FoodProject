@@ -15,6 +15,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
+
 import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,13 +57,16 @@ public class MainActivity extends AppCompatActivity {
                             public void onComplete(Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()&& task.getResult()!= null && !task.getResult().isEmpty()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Dish dish = new Dish(document.get("category").toString(),document.get("name").toString(),document.get("description").toString());
+                                        Intent detailsOverview = new Intent(MainActivity.this, DetailOverview.class);
+                                        detailsOverview.putExtra("Dish",dish);
+                                        startActivity(detailsOverview);
                                         /*if(document.get("email").toString().equals(email)){
 
                                         }
                                         else{
                                         }
                                         */
-                                        int h = 1+1;
                                     }
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
