@@ -13,10 +13,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="164dp"
         android:ems="10"
-        android:hint="Email..."
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         tools:layout_editor_absoluteX="84dp"
-        tools:layout_editor_absoluteY="184dp" />
+        tools:layout_editor_absoluteY="184dp"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/user_pass"
@@ -27,10 +28,11 @@
         android:layout_marginStart="84dp"
         android:layout_marginTop="233dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         tools:layout_editor_absoluteX="83dp"
-        tools:layout_editor_absoluteY="260dp" />
+        tools:layout_editor_absoluteY="260dp"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/button_logIn"
@@ -40,7 +42,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="310dp"
         android:layout_marginEnd="65dp"
-        android:text="Log-in"
+        android:text="@string/log_in"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="348dp" />
 

@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">AND_FoodProject</string>
+    <string name="email">Email...</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log-in</string>
+    <string name="search">Search...</string>
+    <string name="category_chicken">Chicken</string>
+    <string name="category_pork">Pork</string>
+    <string name="category_beef">Beef</string>
+    <string name="category_fish">Fish</string>
+    <string name="category_vegan">Vegan</string>
+    <string name="category_desert">Desert</string>
+    <string name="addItem_button">+</string>
+    <string name="sign_in">Sign-in</string>
 </resources>

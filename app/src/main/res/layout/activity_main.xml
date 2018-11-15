@@ -15,7 +15,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="4dp"
         android:ems="10"
-        android:hint="Search..."
+        android:hint="@string/search"
         android:importantForAutofill="no"
         android:inputType="textPersonName" />
 
@@ -27,7 +27,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="1dp"
         android:layout_toEndOf="@+id/editText"
-        android:text="Sign-in" />
+        android:text="@string/sign_in" />
 
     <android.support.v7.widget.GridLayout
         android:layout_width="299dp"
@@ -41,13 +41,13 @@
             android:id="@+id/category_chicken"
             android:layout_width="100dp"
             android:layout_height="140dp"
-            android:text="Chicken" />
+            android:text="@string/category_chicken" />
 
         <Button
             android:id="@+id/category_pork"
             android:layout_width="100dp"
             android:layout_height="140dp"
-            android:text="Pork"
+            android:text="@string/category_pork"
             app:layout_column="1"
             app:layout_row="0" />
 
@@ -55,7 +55,7 @@
             android:id="@+id/category_Beef"
             android:layout_width="100dp"
             android:layout_height="140dp"
-            android:text="Beef"
+            android:text="@string/category_beef"
             app:layout_column="2"
             app:layout_row="0" />
 
@@ -63,7 +63,7 @@
             android:id="@+id/category_fish"
             android:layout_width="100dp"
             android:layout_height="140dp"
-            android:text="Fish"
+            android:text="@string/category_fish"
             app:layout_column="0"
             app:layout_row="1" />
 
@@ -71,7 +71,7 @@
             android:id="@+id/category_vegan"
             android:layout_width="100dp"
             android:layout_height="140dp"
-            android:text="Vegan"
+            android:text="@string/category_vegan"
             app:layout_column="1"
             app:layout_row="1" />
 
@@ -79,7 +79,7 @@
             android:id="@+id/category_desert"
             android:layout_width="100dp"
             android:layout_height="140dp"
-            android:text="Desert"
+            android:text="@string/category_desert"
             app:layout_column="2"
             app:layout_row="1" />
     </android.support.v7.widget.GridLayout>
@@ -90,9 +90,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="36dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginBottom="41dp"
         android:gravity="center_vertical|center"
-        android:text="+" />
+        android:text="@string/addItem_button" />
 
 </RelativeLayout>
