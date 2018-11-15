@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
 
+import java.io.Serializable;
+
 
 @SuppressWarnings("serial")
 public class Dish implements Parcelable {

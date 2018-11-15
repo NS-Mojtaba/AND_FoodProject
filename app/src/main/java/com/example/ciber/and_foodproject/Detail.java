@@ -24,7 +24,7 @@ public class Detail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.detail);
 
         backBtn = findViewById(R.id.backBtn);
         saveBtn = findViewById(R.id.saveBtn);
@@ -33,18 +33,18 @@ public class Detail extends AppCompatActivity {
         nameTxt = findViewById(R.id.nameTxt);
 
         //Call main activity to check login status
-
+        /*
         if(MainActivity.getInstance().getLoginStatus()){
             saveBtn.setVisibility(View.VISIBLE);
         }else{
             saveBtn.setVisibility(View.GONE);
         }
-
+        */
 
     }
 
 
-    public void SetDish(Dish _dish){
+   public void SetDish(Dish _dish){
         dish = _dish;
     }
 

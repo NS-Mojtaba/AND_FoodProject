@@ -2,6 +2,7 @@ package com.example.ciber.and_foodproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+
 
 public class DetailOverview extends AppCompatActivity {
 
@@ -28,7 +29,7 @@ public class DetailOverview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.detail_overview);
 
         backBtn = findViewById(R.id.backBtn);
         detailBtn = findViewById(R.id.detailBtn);
@@ -58,6 +59,7 @@ public class DetailOverview extends AppCompatActivity {
                 startActivity(new Intent(DetailOverview.this, Detail.class));
             }
         });
+
         if(MainActivity.getInstance().getLoginStatus()){
             deleteBtn.setVisibility(View.VISIBLE);
         }else{
@@ -65,8 +67,13 @@ public class DetailOverview extends AppCompatActivity {
         }
 
         Intent i = getIntent();
-        //Dish dish = (Dish)i .getSerializableExtra("Dish");
-        int a = 1+1;
+        Dish newdish = (Dish)i .getParcelableExtra("Dish");
+
+
+        //SetDish(dish);
+
+        nameTxt.setText(newdish.name);
+
     }
 
     public void SetDish(Dish _dish){

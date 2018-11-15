@@ -57,10 +57,13 @@ public class MainActivity extends AppCompatActivity {
                             public void onComplete(Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()&& task.getResult()!= null && !task.getResult().isEmpty()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
+
                                         Dish dish = new Dish(document.get("category").toString(),document.get("name").toString(),document.get("description").toString());
                                         Intent detailsOverview = new Intent(MainActivity.this, DetailOverview.class);
+
                                         detailsOverview.putExtra("Dish",dish);
                                         startActivity(detailsOverview);
+
                                         /*if(document.get("email").toString().equals(email)){
 
                                         }
@@ -142,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     public static MainActivity getInstance(){
         return instance;
     }
@@ -152,5 +156,9 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean getLoginStatus(){
         return hasSignedIn;
+    }
+
+    public void test(){
+
     }
 }

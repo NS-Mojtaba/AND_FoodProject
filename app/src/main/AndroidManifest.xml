@@ -20,6 +20,8 @@
             android:name=".Login"
             android:theme="@style/AppTheme.Transparent" />
         <activity android:name=".AddRecipe" />
+        <activity android:name=".Detail" />
+        <activity android:name=".DetailOverview" />
         <activity android:name=".Category"></activity>
     </application>
 
