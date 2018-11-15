@@ -99,4 +99,8 @@ public class MainActivity extends AppCompatActivity {
     public void setSignIn(boolean option){
         hasSignedIn = option;
     }
+
+    public boolean getLoginStatus(){
+        return hasSignedIn;
+    }
 }
