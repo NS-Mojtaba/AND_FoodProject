@@ -3,9 +3,19 @@ package com.example.ciber.and_foodproject;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private Button button_addItem;
     private static MainActivity instance;
     private boolean hasSignedIn;
+    private SearchView simpleSearchView;
+    private FirebaseFirestore firebase;
 
 
     @Override
@@ -31,6 +43,39 @@ public class MainActivity extends AppCompatActivity {
             }
         }) ;
 
+        firebase = FirebaseFirestore.getInstance();
+
+        simpleSearchView = findViewById(R.id.simpleSearchView);
+        simpleSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                firebase.collection("food").whereEqualTo("name",query).get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()&& task.getResult()!= null && !task.getResult().isEmpty()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        /*if(document.get("email").toString().equals(email)){
+
+                                        }
+                                        else{
+                                        }
+                                        */
+                                        int h = 1+1;
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // do something when text changes
+                return false;
+            }
+        });
 
         /*fireBase = FirebaseFirestore.getInstance();
         saveBtn = findViewById(R.id.saveBtn);
