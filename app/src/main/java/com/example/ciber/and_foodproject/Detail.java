@@ -18,6 +18,7 @@ public class Detail extends AppCompatActivity {
 
     public TextView nameTxt;
 
+    public Dish dish;
 
 
     @Override
@@ -40,6 +41,11 @@ public class Detail extends AppCompatActivity {
         }
 
 
+    }
+
+
+    public void SetDish(Dish _dish){
+        dish = _dish;
     }
 
 }
