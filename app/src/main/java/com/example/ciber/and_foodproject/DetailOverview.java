@@ -31,6 +31,8 @@ public class DetailOverview extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_overview);
 
+
+
         backBtn = findViewById(R.id.backBtn);
         detailBtn = findViewById(R.id.detailBtn);
         deleteBtn = findViewById(R.id.deleteBtn);
@@ -43,7 +45,12 @@ public class DetailOverview extends AppCompatActivity {
         detailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DetailOverview.this, Detail.class));
+
+
+                Intent details = new Intent(DetailOverview.this, Detail.class);
+
+                details.putExtra("Dish",dish);
+                startActivity(details);
             }
         });
 
@@ -60,19 +67,24 @@ public class DetailOverview extends AppCompatActivity {
             }
         });
 
+        Intent i = getIntent();
+        Dish newdish = (Dish)i .getParcelableExtra("Dish");
+
+
+        SetDish(newdish);
+
+        nameTxt.setText(dish.name);
+        descriptionTxt.setText(dish.description);
+
+
+
         if(MainActivity.getInstance().getLoginStatus()){
             deleteBtn.setVisibility(View.VISIBLE);
         }else{
             deleteBtn.setVisibility(View.GONE);
         }
 
-        Intent i = getIntent();
-        Dish newdish = (Dish)i .getParcelableExtra("Dish");
 
-
-        //SetDish(dish);
-
-        nameTxt.setText(newdish.name);
 
     }
 

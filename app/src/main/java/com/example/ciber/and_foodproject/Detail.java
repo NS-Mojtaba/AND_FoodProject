@@ -1,5 +1,6 @@
 package com.example.ciber.and_foodproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -32,14 +33,22 @@ public class Detail extends AppCompatActivity {
 
         nameTxt = findViewById(R.id.nameTxt);
 
-        //Call main activity to check login status
-        /*
+        Intent i = getIntent();
+        Dish newdish = (Dish)i .getParcelableExtra("Dish");
+
+
+        SetDish(newdish);
+
+        nameTxt.setText(dish.name);
+        descriptionTxt.setText(dish.description);
+
+
         if(MainActivity.getInstance().getLoginStatus()){
             saveBtn.setVisibility(View.VISIBLE);
         }else{
             saveBtn.setVisibility(View.GONE);
         }
-        */
+
 
     }
 
