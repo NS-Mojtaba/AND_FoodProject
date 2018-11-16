@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         return hasSignedIn;
     }
 
-    public void test(){
+
 
     }
-}
+

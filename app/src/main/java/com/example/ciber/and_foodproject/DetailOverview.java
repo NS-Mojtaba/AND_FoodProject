@@ -57,18 +57,20 @@ public class DetailOverview extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DetailOverview.this, MainActivity.class));
+                
+                finish();
+
             }
         });
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DetailOverview.this, Detail.class));
+
             }
         });
 
-        Intent i = getIntent();
-        Dish newdish = (Dish)i .getParcelableExtra("Dish");
+
+        Dish newdish = (Dish)getIntent().getParcelableExtra("Dish");
 
 
         SetDish(newdish);
