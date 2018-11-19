@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class DeleteDish extends AppCompatActivity {
+public class
+DeleteDish extends AppCompatActivity {
 
     private FirebaseFirestore firebase;
     public Button noBtn;
