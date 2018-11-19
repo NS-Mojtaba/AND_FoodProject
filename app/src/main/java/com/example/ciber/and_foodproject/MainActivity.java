@@ -1,6 +1,7 @@
 package com.example.ciber.and_foodproject;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -161,4 +164,47 @@ public class MainActivity extends AppCompatActivity {
     public void test(){
 
     }
+
+    public void deleteDish(final Dish _dish){
+
+firebase.collection("food").whereEqualTo("name",_dish.name).get()
+        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
+                        // here you can get the id.
+
+                        firebase.collection("food").document(documentSnapshot.getId()).delete();
+                        // you can apply your actions...
+                    }
+                } else {
+
+                }
+            }
+        });
+
+         /*  firebase.collection("food")
+                .document()
+         .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, " Deleted documents: ", task.getException());
+
+                } else Log.d(TAG, "Error deleting documents: ", task.getException());
+            }
+        });*/
+
+        //firebase.collection("food").document(_dish)
+        // firebase.collection("food").document("MmTRoGD9fdfBv7h5b5sb").delete();
+        // firebase.collection("food").whereEqualTo("name",query).get()
+
+
+
+
+
+        }
+
+
 }

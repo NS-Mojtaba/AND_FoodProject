@@ -36,6 +36,12 @@ public class Detail extends AppCompatActivity {
         Intent i = getIntent();
         Dish newdish = (Dish)i .getParcelableExtra("Dish");
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         SetDish(newdish);
 

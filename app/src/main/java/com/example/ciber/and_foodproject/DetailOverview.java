@@ -16,7 +16,7 @@ public class DetailOverview extends AppCompatActivity {
 
 
     public Button backBtn;
-    public Button detailBtn;
+    public Button editBtn;
     public Button deleteBtn;
 
     public TextView descriptionTxt;
@@ -34,7 +34,7 @@ public class DetailOverview extends AppCompatActivity {
 
 
         backBtn = findViewById(R.id.backBtn);
-        detailBtn = findViewById(R.id.detailBtn);
+        editBtn = findViewById(R.id.detailBtn);
         deleteBtn = findViewById(R.id.deleteBtn);
         descriptionTxt = findViewById(R.id.descriptionTxt);
 
@@ -42,7 +42,7 @@ public class DetailOverview extends AppCompatActivity {
 
 
 
-        detailBtn.setOnClickListener(new View.OnClickListener() {
+        editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -57,13 +57,14 @@ public class DetailOverview extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DetailOverview.this, MainActivity.class));
+                finish();
             }
         });
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DetailOverview.this, Detail.class));
+               MainActivity.getInstance().deleteDish(dish);
+               finish();
             }
         });
 
@@ -80,8 +81,10 @@ public class DetailOverview extends AppCompatActivity {
 
         if(MainActivity.getInstance().getLoginStatus()){
             deleteBtn.setVisibility(View.VISIBLE);
+            editBtn.setVisibility(View.VISIBLE);
         }else{
             deleteBtn.setVisibility(View.GONE);
+            editBtn.setVisibility(View.GONE);
         }
 
 
