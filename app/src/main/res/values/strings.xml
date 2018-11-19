@@ -12,6 +12,24 @@
     <string name="category_desert">Desert</string>
     <string name="addItem_button">+</string>
     <string name="sign_in">Sign-in</string>
+    <string name="upload_pic">Upload pic</string>
+    <string name="button_back">Back</string>
+    <string name="button_save">Save</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_description">Description</string>
+    <string name="button_delete">Delete</string>
+    <string name="button_details">Details</string>
 
+
+
+
+    <string-array name="categories_array">
+        <item>Chicken</item>
+        <item>Pork</item>
+        <item>Beef</item>
+        <item>Fish</item>
+        <item>Vegan</item>
+        <item>Desert</item>
+    </string-array>
 
 </resources>

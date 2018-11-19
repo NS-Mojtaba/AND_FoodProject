@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ciber.and_foodproject">
+    <uses-permission android:name="android.permission.Internet"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGEE"/>
+    <uses-permission android:name="android.permission.STORAGE"/>
+
 
     <application
         android:allowBackup="true"

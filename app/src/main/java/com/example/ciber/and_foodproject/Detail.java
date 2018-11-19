@@ -42,6 +42,13 @@ public class Detail extends AppCompatActivity {
         nameTxt.setText(dish.name);
         descriptionTxt.setText(dish.description);
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         if(MainActivity.getInstance().getLoginStatus()){
             saveBtn.setVisibility(View.VISIBLE);
