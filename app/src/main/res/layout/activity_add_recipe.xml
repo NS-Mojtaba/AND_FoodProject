@@ -7,7 +7,7 @@
     tools:context=".AddRecipe">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_choose_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -17,33 +17,34 @@
         android:text="@string/upload_pic"
         app:layout_constraintBottom_toTopOf="@+id/text_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.382"
+        app:layout_constraintHorizontal_bias="0.227"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.508" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         android:ems="10"
         android:hint="@string/hint_name"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/text_description"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.392"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/text_description"
         android:layout_width="249dp"
-        android:layout_height="171dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="128dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         android:ems="10"
         android:hint="@string/hint_description"
         android:importantForAutofill="no"
@@ -57,19 +58,47 @@
         android:id="@+id/spinner"
         android:layout_width="234dp"
         android:layout_height="42dp"
+        android:layout_marginBottom="196dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:entries="@array/categories_array"
+        app:layout_constraintBottom_toTopOf="@+id/button_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="303dp"
+        android:layout_height="138dp"
         android:layout_marginBottom="112dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_back"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:entries="@array/categories_array"/>
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="293dp"
+        android:layout_height="16dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <Button
         android:id="@+id/button_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/button_back"
@@ -81,8 +110,8 @@
         android:id="@+id/button_save_recipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="64dp"
         android:text="@string/button_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

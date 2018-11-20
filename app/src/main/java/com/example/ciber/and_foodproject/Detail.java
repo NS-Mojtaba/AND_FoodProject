@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class Detail extends AppCompatActivity {
 
     public Button backBtn;
@@ -64,6 +67,8 @@ public class Detail extends AppCompatActivity {
 
 
     }
+
+
 
 
    public void SetDish(Dish _dish){
