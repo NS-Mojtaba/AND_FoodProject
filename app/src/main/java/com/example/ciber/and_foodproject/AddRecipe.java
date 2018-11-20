@@ -100,13 +100,11 @@ public class AddRecipe extends AppCompatActivity {
                     map.put("description", text_description.getText().toString());
                     map.put("category", spinner.getSelectedItem().toString());
                     MainActivity.getInstance().addRecipe(map, v);
-
+                    finish();
                 }
                 else{
                     Toast.makeText(AddRecipe.this, "Name already exists", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
     }
