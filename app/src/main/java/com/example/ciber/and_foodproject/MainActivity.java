@@ -22,6 +22,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView image_fish;
     private ImageView image_dessert;
     private ImageView image_vegan;
-    //private StorageReference mStorageRef;
     private FirebaseFirestore fireBase;
+    private ArrayList<Dish> list;
 
 
     @Override
@@ -62,11 +63,14 @@ public class MainActivity extends AppCompatActivity {
         image_pork = findViewById(R.id.image_pork);
         image_fish = findViewById(R.id.image_fish);
         image_vegan = findViewById(R.id.image_vegan);
+        list = new ArrayList<>();
 
         image_chicken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Category.class));
+                Intent c = new Intent(MainActivity.this, Category.class);
+                c.putExtra("List", "Chicken");
+                startActivity(c);
             }
         });
         image_beef.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
         image_fish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Category.class));
+                getDishesFOrCOllection("Fish");
+
             }
         });
         image_vegan.setOnClickListener(new View.OnClickListener() {
@@ -136,8 +141,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onComplete(Task<QuerySnapshot> task) {
                                 if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                        Dish dish = new Dish(document.get("category").toString(), convert(document.get("name").toString()), document.get("description").toString());
+                                        Dish dish = new Dish(document.get("category").toString(), convert(document.get("name").toString()), document.get("description").toString(), document.get("imageUrl").toString());
                                         Intent detailsOverview = new Intent(MainActivity.this, DetailOverview.class);
 
                                         detailsOverview.putExtra("Dish", dish);
@@ -157,30 +161,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        /*fireBase = FirebaseFirestore.getInstance();
-        saveBtn = findViewById(R.id.saveBtn);
-        text =  findViewById(R.id.inputText);
-
-
-
-        saveBtn.setOnClickListener( new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                String txt = text.getText().toString();
-
-                Map<String, String> map = new HashMap<>();
-                map.put("name", txt);
-                fireBase.collection("first").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(MainActivity.this, "CREATED",Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
-        */
-
     }
 
     public boolean searchForDish(String dishName) {
@@ -304,27 +284,33 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-         /*  firebase.collection("food")
-                .document()
-         .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d(TAG, " Deleted documents: ", task.getException());
-
-                } else Log.d(TAG, "Error deleting documents: ", task.getException());
-            }
-        });*/
-
-        //firebase.collection("food").document(_dish)
-        // firebase.collection("food").document("MmTRoGD9fdfBv7h5b5sb").delete();
-        // firebase.collection("food").whereEqualTo("name",query).get()
-
-
-
-
-
     }
 
+    public ArrayList<Dish> getDishesFOrCOllection(String name){
+        list.clear();
+        firebase.collection("food")
+                .whereEqualTo("category", name)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Dish dish = new Dish(document.get("category").toString(), document.get("name").toString(), document.get("description").toString(), document.get("imageUrl").toString());
+                                list.add(dish);
+                            }
+
+                            Intent c = new Intent(MainActivity.this, Category.class);
+
+                            c.putParcelableArrayListExtra("CategoryName", (ArrayList<Dish>)list);
+                            startActivity(c);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+        return list;
+
+    }
 }

@@ -13,12 +13,13 @@ public class Dish implements Parcelable {
     public String category;
     public String name;
     public String description;
-    //public ImageView image;
+    public String imageURL;
 
-    public Dish(String _category, String _name, String _description){
+    public Dish(String _category, String _name, String _description, String _imageURL){
         this.category = _category;
         this.name = _name;
         this.description = _description;
+        this.imageURL = _imageURL;
     }
 
 
@@ -32,13 +33,10 @@ public class Dish implements Parcelable {
         dest.writeString(category);
         dest.writeString(name);
         dest.writeString(description);
+        dest.writeString(imageURL);
     }
 
-    private Dish(Parcel in){
-        this.category = in.readString();
-        this.name = in.readString();
-        this.description = in.readString();
-    }
+
 
     public static final Parcelable.Creator<Dish> CREATOR = new Parcelable.Creator<Dish>() {
         @Override
@@ -51,4 +49,11 @@ public class Dish implements Parcelable {
             return new Dish[size];
         }
     };
+
+    public Dish(Parcel in){
+        this.category = in.readString();
+        this.name = in.readString();
+        this.description = in.readString();
+        this.imageURL = in.readString();
+    }
 }

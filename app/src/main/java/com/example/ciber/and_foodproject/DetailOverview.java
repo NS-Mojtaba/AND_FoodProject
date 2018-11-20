@@ -47,8 +47,6 @@ public class DetailOverview extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent details = new Intent(DetailOverview.this, Detail.class);
 
                 details.putExtra("Dish",dish);
@@ -59,7 +57,6 @@ public class DetailOverview extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(DetailOverview.this, MainActivity.class));
                 finish();
             }
         });
