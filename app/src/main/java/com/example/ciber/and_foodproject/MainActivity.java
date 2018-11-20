@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -63,37 +64,37 @@ public class MainActivity extends AppCompatActivity {
         image_fish = findViewById(R.id.image_fish);
         image_vegan = findViewById(R.id.image_vegan);
 
-        image_chicken.setOnClickListener(new View.OnClickListener(){
+        image_chicken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Category.class));
             }
         });
-        image_beef.setOnClickListener(new View.OnClickListener(){
+        image_beef.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Category.class));
             }
         });
-        image_dessert.setOnClickListener(new View.OnClickListener(){
+        image_dessert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Category.class));
             }
         });
-        image_pork.setOnClickListener(new View.OnClickListener(){
+        image_pork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Category.class));
             }
         });
-        image_fish.setOnClickListener(new View.OnClickListener(){
+        image_fish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Category.class));
             }
         });
-        image_vegan.setOnClickListener(new View.OnClickListener(){
+        image_vegan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Category.class));
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         signIn_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            startActivity(new Intent(MainActivity.this, Login.class));
+                startActivity(new Intent(MainActivity.this, Login.class));
             }
         });
 
@@ -130,17 +131,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 query = convert(query);
-                firebase.collection("food").whereEqualTo("name",query).get()
+                firebase.collection("food").whereEqualTo("name", convert(query)).get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()&& task.getResult()!= null && !task.getResult().isEmpty()) {
+                                if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                        Dish dish = new Dish(document.get("category").toString(),document.get("name").toString(),document.get("description").toString());
+                                        Dish dish = new Dish(document.get("category").toString(), convert(document.get("name").toString()), document.get("description").toString());
                                         Intent detailsOverview = new Intent(MainActivity.this, DetailOverview.class);
 
-                                        detailsOverview.putExtra("Dish",dish);
+                                        detailsOverview.putExtra("Dish", dish);
                                         startActivity(detailsOverview);
                                     }
                                 } else {
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 // do something when text changes
@@ -182,14 +184,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public boolean searchForDish(String dishName){
+    public boolean searchForDish(String dishName) {
         exists = false;
-        String tmp = convert(dishName);
-        firebase.collection("food").whereEqualTo("name",tmp).get()
+        firebase.collection("food").whereEqualTo("name", convert(dishName)).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()&& task.getResult()!= null && !task.getResult().isEmpty()) {
+                        if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
                             exists = true;
                         } else {
                             exists = false;
@@ -198,10 +199,11 @@ public class MainActivity extends AppCompatActivity {
                 });
         return exists;
     }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        if(hasSignedIn){
+        if (hasSignedIn) {
             signIn_out.setOnClickListener(null);
             signIn_out.setText("Sign-out");
             signIn_out.setOnClickListener(new View.OnClickListener() {
@@ -211,42 +213,41 @@ public class MainActivity extends AppCompatActivity {
                     button_addItem.setVisibility(View.GONE);
                     signIn_out.setText("Sign-in");
                     signIn_out.setOnClickListener(new View.OnClickListener() {
-                                                      @Override
-                                                      public void onClick(View v) {
-                                                          startActivity(new Intent(MainActivity.this, Login.class));
-                                                      }
-                                                  });
+                        @Override
+                        public void onClick(View v) {
+                            startActivity(new Intent(MainActivity.this, Login.class));
+                        }
+                    });
                     Toast.makeText(MainActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
 
                 }
-            }) ;
+            });
             button_addItem.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             signIn_out.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(MainActivity.this, Login.class));
                 }
-            }) ;
+            });
             button_addItem.setVisibility(View.GONE);
         }
         simpleSearchView.setQuery("", false);
     }
 
-    public static MainActivity getInstance(){
+    public static MainActivity getInstance() {
         return instance;
     }
 
-    public void setSignIn(boolean option){
+    public void setSignIn(boolean option) {
         hasSignedIn = option;
     }
 
-    public boolean getLoginStatus(){
+    public boolean getLoginStatus() {
         return hasSignedIn;
     }
 
-    public static String convert(String str){
+    public static String convert(String str) {
         // Create a char array of given String
         char ch[] = str.toCharArray();
         for (int i = 0; i < str.length(); i++) {
@@ -256,14 +257,14 @@ public class MainActivity extends AppCompatActivity {
                 // If it is in lower-case
                 if (ch[i] >= 'a' && ch[i] <= 'z') {
                     // Convert into Upper-case
-                    ch[i] = (char)(ch[i] - 'a' + 'A');
+                    ch[i] = (char) (ch[i] - 'a' + 'A');
                 }
             }
             // If apart from first character
             // Any one is in Upper-case
             else if (ch[i] >= 'A' && ch[i] <= 'Z')
                 // Convert into Lower-Case
-                ch[i] = (char)(ch[i] + 'a' - 'A');
+                ch[i] = (char) (ch[i] + 'a' - 'A');
         }
 
         // Convert the char array to equivalent String
@@ -271,11 +272,11 @@ public class MainActivity extends AppCompatActivity {
         return st;
     }
 
-    public void addRecipe(Map<String, String> map, final View view){
-        fireBase.collection("first").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+    public void addRecipe(Map<String, String> map, final View view) {
+        fireBase.collection("food").add(map).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(view.getContext(), "Recipe added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Recipe added", Toast.LENGTH_SHORT).show();
             }
 
         }).addOnFailureListener(new OnFailureListener() {
@@ -285,4 +286,46 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void deleteDish(final Dish _dish, final View view){
+
+        firebase.collection("food").whereEqualTo("name",_dish.name).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments()) {
+                                // here you can get the id.
+
+                                firebase.collection("food").document(documentSnapshot.getId()).delete();
+                                Toast.makeText(view.getContext(), "Item has been deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(view.getContext(), "Error executing the action", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+         /*  firebase.collection("food")
+                .document()
+         .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, " Deleted documents: ", task.getException());
+
+                } else Log.d(TAG, "Error deleting documents: ", task.getException());
+            }
+        });*/
+
+        //firebase.collection("food").document(_dish)
+        // firebase.collection("food").document("MmTRoGD9fdfBv7h5b5sb").delete();
+        // firebase.collection("food").whereEqualTo("name",query).get()
+
+
+
+
+
+    }
+
 }

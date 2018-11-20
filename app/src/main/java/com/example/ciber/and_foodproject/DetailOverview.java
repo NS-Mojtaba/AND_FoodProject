@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Debug;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,22 +16,23 @@ import android.widget.TextView;
 public class DetailOverview extends AppCompatActivity {
 
 
-    public Button backBtn;
-    public Button editBtn;
-    public Button deleteBtn;
+    private Button backBtn;
+    private Button editBtn;
+    private Button deleteBtn;
 
-    public TextView descriptionTxt;
-    public ImageView dishImg;
+    private TextView descriptionTxt;
+    private ImageView dishImg;
+    private static DetailOverview instance;
 
-    public TextView nameTxt;
+    private TextView nameTxt;
 
-    public Dish dish;
+    private Dish dish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_overview);
-
+        instance = this;
 
 
         backBtn = findViewById(R.id.backBtn);
@@ -64,14 +66,15 @@ public class DetailOverview extends AppCompatActivity {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DetailOverview.this, Detail.class));
+                MainActivity.getInstance().deleteDish(dish, v);
+                finish();
             }
         });
 
-        Dish newdish = (Dish)getIntent().getParcelableExtra("Dish");
+        Dish newDish = (Dish)getIntent().getParcelableExtra("Dish");
 
 
-        SetDish(newdish);
+        SetDish(newDish);
 
         nameTxt.setText(dish.name);
         descriptionTxt.setText(dish.description);
@@ -83,14 +86,13 @@ public class DetailOverview extends AppCompatActivity {
         }else{
             deleteBtn.setVisibility(View.GONE);
         }
-
-
-
     }
 
+    public static DetailOverview getInstance() {
+        return instance;
+    }
     public void SetDish(Dish _dish){
         dish = _dish;
     }
-
 
 }
