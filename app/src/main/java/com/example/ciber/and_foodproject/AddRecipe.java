@@ -87,14 +87,14 @@ public class AddRecipe extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mUploadTask != null && mUploadTask.isInProgress()) {
-                    Toast.makeText(AddRecipe.this, "Upload in progress", Toast.LENGTH_SHORT).show();
-                } else {
-                    uploadFile();
-                }
 
                 if(!MainActivity.getInstance().searchForDish(text_name.getText().toString())){
                     // SAVE FUNCTIONALITY GOES HERE!!!!!!!!!!!!
+                    if (mUploadTask != null && mUploadTask.isInProgress()) {
+                        Toast.makeText(AddRecipe.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                    } else {
+                        uploadFile();
+                    }
                     Map<String, String> map = new HashMap<>();
                     map.put("name", MainActivity.getInstance().convert(text_name.getText().toString()));
                     map.put("description", text_description.getText().toString());
