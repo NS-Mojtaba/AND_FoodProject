@@ -19,9 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -49,9 +52,13 @@ public class AddRecipe extends AppCompatActivity {
     private Uri mImageUri;
 
     private StorageReference mStorageRef;
-    private DatabaseReference mDatabaseRef;
 
     private StorageTask mUploadTask;
+
+    private String imgURL;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //private CollectionReference mDatabaseRef = db.collection("food");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,23 +97,18 @@ public class AddRecipe extends AppCompatActivity {
 
                 if(!MainActivity.getInstance().searchForDish(text_name.getText().toString())){
                     // SAVE FUNCTIONALITY GOES HERE!!!!!!!!!!!!
-                    if (mUploadTask != null && mUploadTask.isInProgress()) {
-                        Toast.makeText(AddRecipe.this, "Upload in progress", Toast.LENGTH_SHORT).show();
-                    } else {
-                        uploadFile();
-                    }
+                    uploadFile();
                     Map<String, String> map = new HashMap<>();
                     map.put("name", MainActivity.getInstance().convert(text_name.getText().toString()));
                     map.put("description", text_description.getText().toString());
                     map.put("category", spinner.getSelectedItem().toString());
+                    map.put("imageUrl", imgURL);
                     MainActivity.getInstance().addRecipe(map, v);
-
+                    finish();
                 }
                 else{
                     Toast.makeText(AddRecipe.this, "Name already exists", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
     }
@@ -141,12 +143,12 @@ public class AddRecipe extends AppCompatActivity {
         if (mImageUri != null) {
             StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
-
+            imgURL = fileReference.getPath();
             mUploadTask = fileReference.putFile(mImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Handler handler = new Handler();
+                           Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -155,10 +157,7 @@ public class AddRecipe extends AppCompatActivity {
                             }, 500);
 
                             Toast.makeText(AddRecipe.this, "Upload successful", Toast.LENGTH_LONG).show();
-                            Upload upload = new Upload(text_name.getText().toString().trim(),
-                                    taskSnapshot.getStorage().getDownloadUrl().toString());
-                            String uploadId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(uploadId).setValue(upload);
+
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
