@@ -96,7 +96,7 @@ public class AddRecipe extends AppCompatActivity {
                 if(!MainActivity.getInstance().searchForDish(text_name.getText().toString())){
                     // SAVE FUNCTIONALITY GOES HERE!!!!!!!!!!!!
                     Map<String, String> map = new HashMap<>();
-                    map.put("name", text_name.getText().toString());
+                    map.put("name", MainActivity.getInstance().convert(text_name.getText().toString()));
                     map.put("description", text_description.getText().toString());
                     map.put("category", spinner.getSelectedItem().toString());
                     MainActivity.getInstance().addRecipe(map, v);
