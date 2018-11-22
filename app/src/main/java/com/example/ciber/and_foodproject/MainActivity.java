@@ -68,51 +68,40 @@ public class MainActivity extends AppCompatActivity {
         image_chicken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent c = new Intent(MainActivity.this, Category.class);
-                c.putExtra("List", "Chicken");
-                startActivity(c);
+                getDishesFOrCOllection("Chicken");
             }
         });
         image_beef.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Category.class));
+                getDishesFOrCOllection("Beef");
             }
         });
         image_dessert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Category.class));
+                getDishesFOrCOllection("Dessert");
             }
         });
         image_pork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Category.class));
+                getDishesFOrCOllection("Pork");
             }
         });
         image_fish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDishesFOrCOllection("Fish");
-
             }
         });
         image_vegan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Category.class));
+                getDishesFOrCOllection("Vegan");
             }
         });
         //**********************************************
-
-        //mStorageRef = FirebaseStorage.getInstance().getReference();
-        //StorageReference tmp = mStorageRef.child("/categories/Chicken.png");
-        /*Glide.with(this.getApplicationContext())
-                .load(tmp)
-                .into(image_chicken);
-                */
-
 
         button_addItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -295,11 +284,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Dish dish = new Dish(document.get("category").toString(), document.get("name").toString(), document.get("description").toString(), document.get("imageUrl").toString());
-                                list.add(dish);
+                            if(!task.getResult().isEmpty()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Dish dish = new Dish(document.get("category").toString(), document.get("name").toString(), document.get("description").toString(), document.get("imageUrl").toString());
+                                    list.add(dish);
+                                }
                             }
-
                             Intent c = new Intent(MainActivity.this, Category.class);
 
                             c.putParcelableArrayListExtra("CategoryName", (ArrayList<Dish>)list);

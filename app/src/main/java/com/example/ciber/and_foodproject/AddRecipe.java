@@ -18,7 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,7 +37,6 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,8 +60,9 @@ public class AddRecipe extends AppCompatActivity {
     private StorageTask mUploadTask;
 
     private String imgURL;
+    private String imgNyURL;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db;
     //private CollectionReference mDatabaseRef = db.collection("food");
 
     @Override
@@ -74,6 +78,7 @@ public class AddRecipe extends AppCompatActivity {
         spinner = findViewById(R.id.spinner);
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
+        db = FirebaseFirestore.getInstance();
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
 
@@ -99,13 +104,9 @@ public class AddRecipe extends AppCompatActivity {
                 if(!MainActivity.getInstance().searchForDish(text_name.getText().toString())){
                     // SAVE FUNCTIONALITY GOES HERE!!!!!!!!!!!!
 
-                    uploadFile();
-                    Map<String, String> map = new HashMap<>();
-                    map.put("name", MainActivity.getInstance().convert(text_name.getText().toString()));
-                    map.put("description", text_description.getText().toString());
-                    map.put("category", spinner.getSelectedItem().toString());
-                    map.put("imageUrl", imgURL);
-                    MainActivity.getInstance().addRecipe(map, v);
+                    uploadFile(v);
+
+
                     finish();
                 }
                 else{
@@ -140,23 +141,26 @@ public class AddRecipe extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    private void uploadFile() {
+    private void uploadFile(final View view) {
         if (mImageUri != null) {
             StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
-            imgURL = fileReference.getPath();
+            imgNyURL = fileReference.getPath();
             mUploadTask = fileReference.putFile(mImageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
+                            Task<Uri> storageRef = FirebaseStorage.getInstance().getReference().child(imgNyURL).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
-                                public void run() {
-                                    mProgressBar.setProgress(0);
-                                }
-                            }, 500);
-
+                                public void onSuccess(Uri uri) {
+                                    Map<String, String> map = new HashMap<>();
+                                    map.put("name", MainActivity.getInstance().convert(text_name.getText().toString()));
+                                    map.put("description", text_description.getText().toString());
+                                    map.put("category", spinner.getSelectedItem().toString());
+                                    map.put("imageUrl", uri.toString());
+                                    MainActivity.getInstance().addRecipe(map, view);
+                                }});
+                            //imgURL = taskSnapshot.getUploadSessionUri().toString();
                             Toast.makeText(AddRecipe.this, "Upload successful", Toast.LENGTH_LONG).show();
 
                         }
